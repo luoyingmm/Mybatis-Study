@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.luoyingmm.dao.StudentMapper">
+    <select id="getStudent" resultMap="TeacherStudent">
+        select * from mybatis.student;
+    </select>
+
+    <resultMap id="TeacherStudent" type="com.luoyingmm.pojo.Student">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <association property="teacher" column="tid" javaType="com.luoyingmm.pojo.Teacher" select="getTeacher2"/>
+    </resultMap>
+
+    <select id="getTeacher2" resultType="com.luoyingmm.pojo.Teacher">
+        select * from mybatis.teacher;
+    </select>
+
+    <select id="getStudent2" resultMap="TeacherStudent2">
+        select s.id sid,s.name sname,t.id tid, t.name tname
+        from mybatis.student s,mybatis.teacher t
+        where s.tid = t.id;
+    </select>
+
+    <resultMap id="TeacherStudent2" type="com.luoyingmm.pojo.Student">
+        <result property="id" column="sid"/>
+        <result property="name" column="sname"/>
+        <association property="teacher" javaType="com.luoyingmm.pojo.Teacher">
+            <result property="name" column="tname"/>
+            <result property="id" column="tid"/>
+        </association>
+
+    </resultMap>
+</mapper>

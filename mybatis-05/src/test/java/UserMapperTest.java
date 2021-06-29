@@ -1,6 +1,7 @@
 import com.luoyingmm.dao.UserMapper;
 import com.luoyingmm.pojo.User;
 import com.luoyingmm.utils.MybatisUtils;
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 
@@ -27,6 +28,17 @@ public class UserMapperTest {
         startIndex.put("pageSize",2);
         List<User> userLimit = mapper.getUserLimit(startIndex);
         for (User user : userLimit) {
+            System.out.println(user);
+        }
+        sqlSession.close();
+    }
+
+    @Test
+    public void getRowBounds(){
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        RowBounds rowBounds = new RowBounds(1, 2);
+        List<User> userList = sqlSession.selectList("com.luoyingmm.dao.UserMapper.getRowBounds",null,rowBounds);
+        for (User user : userList) {
             System.out.println(user);
         }
         sqlSession.close();
