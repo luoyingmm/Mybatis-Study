@@ -3,5 +3,23 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.luoyingmm.dao.TeacherMapper">
+    <select id="getTeacher" resultType="com.luoyingmm.pojo.Teacher">
+        select * from mybatis.teacher
+    </select>
 
+    <select id="getTeacher2" resultMap="TeacherStudent">
+        select s.id sid,s.name sname, t.name tname,t.id tid
+        from mybatis.student s,mybatis.teacher t
+        where t.id=s.tid and t.id=#{tid}
+    </select>
+
+    <resultMap id="TeacherStudent" type="com.luoyingmm.pojo.Teacher">
+        <result property="id" column="tid"/>
+        <result property="name" column="tname"/>
+        <collection property="students" ofType="com.luoyingmm.pojo.Student">
+            <result property="id" column="sid"/>
+            <result property="name" column="sname"/>
+            <result property="tid" column="tid"/>
+        </collection>
+    </resultMap>
 </mapper>

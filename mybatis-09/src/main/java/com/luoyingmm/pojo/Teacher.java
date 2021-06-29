@@ -8,7 +8,7 @@ import java.util.List;
 public class Teacher {
     private int id;
     private String name;
-    private List<Student> list;
+    private List<Student> students;
 
     public Teacher() {
     }
